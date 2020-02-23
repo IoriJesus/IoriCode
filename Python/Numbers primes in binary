@@ -1,0 +1,39 @@
+def dates_of_file():
+    f = open ('binary primes.txt','r')
+    archivo = f.read()
+    print(archivo)
+    f.close()
+    
+def add_file(prime):
+    f = open('binary primes.txt','a')
+    f.write(prime+'\n')
+    f.close()
+
+def number_to_binary(prime):
+        binario = ''
+        while prime // 2 != 0:
+                binario = str(prime % 2) + binario
+                prime = prime // 2
+        binary_prime=(str(prime) + binario)
+        add_file(binary_prime)
+
+def number_prime(number):
+        divider=0
+        for i in range(number):
+                i=i+1
+                if number%i == 0:
+                        divider=divider+1
+        
+        if divider == 2 and number != 1:
+                number_to_binary(number)
+
+def numbers(number):
+        for i in range(number):
+                i=i+1
+                number_prime(i)
+                if(i == number):
+                    dates_of_file()
+                
+
+n = int(input("Insert the number prime in range: "))
+numbers(n)
