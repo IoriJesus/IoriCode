@@ -1,39 +1,77 @@
+import sys
+import random
+
 def dates_of_file():
-    f = open ('binary primes.txt','r')
-    archivo = f.read()
-    print(archivo)
-    f.close()
-    
-def add_file(prime):
-    f = open('binary primes.txt','a')
-    f.write(prime+'\n')
+    f = open("binary primes.txt", "r")
+    for linea in f:
+        print(linea)
     f.close()
 
-def number_to_binary(prime):
-        binario = ''
-        while prime // 2 != 0:
-                binario = str(prime % 2) + binario
-                prime = prime // 2
-        binary_prime=(str(prime) + binario)
-        add_file(binary_prime)
+def add_file(prime_binary):
+    f=open('binary primes.txt','a')
+    f.write(prime_binary +'\n')
+    f.close()
+
+def number_to_binary(number):
+    binary=''
+    
+    while number > 0:
+        
+        if number%2 == 0:
+            binary ='0'+ binary
+        else:
+            binary ='1' + binary
+            
+        number=number//2
+        
+    add_file(binary)
 
 def number_prime(number):
-        divider=0
-        for i in range(number):
-                i=i+1
-                if number%i == 0:
-                        divider=divider+1
+    for i in range(number):
+        i=i+1
+        prime=True
         
-        if divider == 2 and number != 1:
-                number_to_binary(number)
+        if i%2 == 0 and i !=2:
+            prime=False
+        if i%3 == 0 and i !=3:
+            prime=False
+        if i%5 == 0 and i !=5:
+            prime=False
+        if i%7 == 0 and i !=7:
+            prime=False
+            
+        if prime == True and i != 1:
+            number_to_binary(i)
+            
+        if(i == number):
+            dates_of_file()
+        
+def verify_date():
+    number = input('write one number:')
+    
+    if number == '':
+            number=random.randrange(1000000)
+            print(number)
+        
+    try:
+    	number = int(number)
+    	if number > 1:
+    	    return number
+    	else:
+    	    if number == 1:
+    	        print('zero and one don´t are numbers primes')
+    	        sys.exit(0)
+    	        
+    	    if number == 0:
+    	        print('zero don´t is a number prime')
+    	        sys.exit(0)
+    	        
+    	    if number < 0:
+    	        print('This program don´t accepted numbers smaller than 0')
+    	        sys.exit(1)
+    except ValueError:
+        print("datas don´t valid")
+        sys.exit(1)
 
-def numbers(number):
-        for i in range(number):
-                i=i+1
-                number_prime(i)
-                if(i == number):
-                    dates_of_file()
-                
-
-n = int(input("Insert the number prime in range: "))
-numbers(n)
+number=verify_date() 
+number_prime(number)
