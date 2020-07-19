@@ -3,8 +3,8 @@
  
 using namespace std;
  
-int main()
-{
+int main(){
+	
     vector <char> fila{};
     char letras=' ';
     int n=0,mov=0;
@@ -20,6 +20,7 @@ int main()
         for(int i=0; i < n; i++){
          
          if(fila[i]=='B'){
+		 
             if(fila[i+1] == 'G'){
 	        swap(fila[i],fila[i+1]);
 	        i=i+1;
@@ -28,9 +29,7 @@ int main()
         }
     }
     
-    for(int i=0; i<n; i++){
-      cout<<fila[i];
-    }  
+    for(int i=0; i<n; i++) cout<<fila[i];
     
     return 0;
 }
