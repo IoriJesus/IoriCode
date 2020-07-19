@@ -1,3 +1,4 @@
+#Author Montes Martínes Jesús Iori
 import time
 import random
 from random import randint
