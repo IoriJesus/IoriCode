@@ -1,3 +1,4 @@
+#Author Montes Martínez Jesús Iori
 import sys
 import time
 import random
