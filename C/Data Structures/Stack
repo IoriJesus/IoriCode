@@ -1,0 +1,134 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct structure_nodo{
+   int valor;
+   struct structure_nodo *siguiente_nodo;
+}Nodo;
+
+typedef Nodo *Nodo_pila;
+typedef Nodo *Pila;
+ 
+void Push(Pila *pila, int temp){
+    
+   Nodo_pila nuevo;
+ 
+   nuevo = (Nodo_pila)malloc(sizeof(Nodo));
+   nuevo->valor = temp;
+  
+   nuevo->siguiente_nodo = *pila;
+   *pila = nuevo;
+}
+
+int Pop(Pila *pila){
+   Nodo_pila nodo; 
+   int temp;      
+   
+   nodo = *pila;
+   
+   if(!nodo){
+       printf("La pila esta vacia");
+       return 0;
+   }
+   
+   *pila = nodo->siguiente_nodo;
+   temp = nodo->valor; 
+   
+   free(nodo);
+   return temp;
+}
+
+void view_stack(Pila *pila){
+   Nodo_pila nodo;
+   Nodo_pila nodo_temp;
+   char empty_stack = 'n';
+   int temp = 0,i = 1;  
+   
+   nodo_temp = *pila;
+   
+   do{
+        nodo = *pila;
+        
+        if(!nodo){
+            empty_stack = 's';
+        }else{
+            *pila = nodo->siguiente_nodo;
+            temp = nodo->valor; 
+            printf("Elemento numero %d: %d \n",i,temp);
+            i++;
+        }
+        
+    }while(empty_stack == 'n');
+    
+    *pila = nodo_temp;
+}
+ 
+int main(){
+    int numero_elementos_pila = 0,elemento_pila = 0,i = 0;
+    int opcion = 0;
+    char repetir = 's';
+    Pila pila = NULL;
+    Nodo_pila p;
+    
+    do{
+       
+       printf("------------- Menu principal ------------- \n");
+       printf("1.- Agregar elementos a la pila \n");
+       printf("2.- Quitar elementos de la pila \n");
+       printf("3.- Mostrar pila \n");
+       printf("4.- Salir del programa \n");
+      
+       printf("Escriba el numero de la TDA a realizar o 4 para salir: ");
+       scanf("%i",&opcion);
+       
+       switch(opcion){
+           
+           case 1:{
+               
+               printf("Cúantos elementos quieres agregar a la pila? ");
+               scanf("%i",&numero_elementos_pila);
+               
+               for(i = 0; i<numero_elementos_pila;i++){
+                   printf("Ingrese el elemento %d de la pila: " ,i+1);
+                   scanf("%i",&elemento_pila);
+                   Push(&pila,elemento_pila);
+                }
+                
+                break;
+           }
+           
+           case 2:{
+               
+               printf("Cúantos elementos quieres despilar de la pila?");
+               scanf("%i",&numero_elementos_pila);
+               
+               for(i = 0; i<numero_elementos_pila;i++){
+                   printf("Elemento %d despilado. \n",Pop(&pila));
+                }
+                
+                break;
+           }
+           
+           case 3:{
+               
+               view_stack(&pila);
+                
+                break;
+           }
+           
+           case 4:{
+               
+               return 0;
+           }
+           
+           default: printf("Lo sentimos, la opcion %d no esta disponible",opcion);
+       }
+       
+       fflush(stdin);
+       printf("Quieres elegir otra TDA? S/N: ");
+       scanf("%s",&repetir);
+       
+    }while( repetir == 'S' || repetir == 's');
+
+   return 0;
+}
